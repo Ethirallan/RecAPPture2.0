@@ -2,10 +2,10 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter/material.dart';
 import 'package:recappture2/helpers/my_dialogs.dart';
 import 'dart:io';
-import 'package:recappture2/model/my_data.dart';
 import 'package:recappture2/pages/location/location_slide.dart';
 import 'package:recappture2/pages/contacts/contacts_slide.dart';
 import 'package:recappture2/pages/quantity/quantity_slide.dart';
+import 'package:recappture2/helpers/my_http_calls.dart';
 
 class NavigationModel extends Model {
 
@@ -28,7 +28,7 @@ class NavigationModel extends Model {
     notifyListeners();
   }
 
-  void next() {
+  void next(BuildContext context) async {
     if (page == 4) {
       navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
     } else if (page == 0 || page == 1) {
@@ -45,7 +45,15 @@ class NavigationModel extends Model {
       }
     } else if (page == 5) {
       if (ContactSlideState.validateContacts()) {
-        MyData.printData();
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return loadingDialog;
+          },
+        );
+        await sendUser();
+        Navigator.pop(context);
         navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
         nextText = 'IZHOD';
       }

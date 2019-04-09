@@ -18,7 +18,7 @@ class _CameraSlideState extends State<CameraSlide> with AutomaticKeepAliveClient
       File imgFile = await ImagePicker.pickImage(source: source);
       GallerySlideState.galleryModel.addImage(imgFile.path);
       if (!GallerySlideState.galleryModel.checkIfGalleryEmpty()) {
-        HomeState.navigationModel.next();
+        HomeState.navigationModel.next(context);
       }
     } else {
       Scaffold.of(context).showSnackBar(SnackBar(content: Text('Maksimalno število slik doseženo (3/3)!')));

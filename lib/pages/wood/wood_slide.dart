@@ -49,7 +49,7 @@ class _WoodSlideState extends State<WoodSlide> with AutomaticKeepAliveClientMixi
               children: <Widget>[
                 Expanded(
                   child: GestureDetector(
-                    onTap: woodModel.addDeciduous,
+                    onTap: () => woodModel.addDeciduous(context),
                     child: Padding(
                       padding: EdgeInsets.all(4),
                       child: Column(
@@ -82,7 +82,7 @@ class _WoodSlideState extends State<WoodSlide> with AutomaticKeepAliveClientMixi
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: woodModel.addConiferous,
+                    onTap: () => woodModel.addConiferous(context),
                     child: Padding(
                       padding: EdgeInsets.all(4),
                       child: Column(

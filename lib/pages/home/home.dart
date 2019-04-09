@@ -84,7 +84,7 @@ class HomeState extends State<Home> {
                       if (model.hasPhoto) {
                         return NextBtn(
                           text: navigationModel.nextText,
-                          fun: () => navigationModel.next(),
+                          fun: () => navigationModel.next(context),
                         );
                       }
                       return Container();

@@ -1,6 +1,7 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:recappture2/model/my_data.dart';
 import 'package:recappture2/pages/home/home.dart';
+import 'package:flutter/material.dart';
 
 class WoodModel extends Model {
   int _myTurn = 0;
@@ -10,7 +11,7 @@ class WoodModel extends Model {
   int get turn => _myTurn;
 
   //listavec
-  void addDeciduous() {
+  void addDeciduous(BuildContext context) {
     if (_myTurn < 2) {
       //setQuizAnswers -> 0 igalvec, 1 listavec
       if (_myTurn == 0) {
@@ -30,14 +31,14 @@ class WoodModel extends Model {
           MyData.woodType = 0;
         }
         _myTurn++;
-        HomeState.navigationModel.next();
+        HomeState.navigationModel.next(context);
       }
     }
     notifyListeners();
   }
 
   //iglavec
-  void addConiferous() {
+  void addConiferous(BuildContext context) {
     if (_myTurn < 2) {
       //setQuizAnswers -> 0 igalvec, 1 listavec
       if (_myTurn == 0) {
@@ -57,7 +58,7 @@ class WoodModel extends Model {
           MyData.woodType = 0;
         }
         _myTurn++;
-        HomeState.navigationModel.next();
+        HomeState.navigationModel.next(context);
       }
     }
     notifyListeners();
