@@ -6,13 +6,25 @@ import 'package:recappture2/model/my_data.dart';
 
 class ContactSlide extends StatefulWidget {
   @override
-  _ContactSlideState createState() => _ContactSlideState();
+  ContactSlideState createState() => ContactSlideState();
 }
 
-class _ContactSlideState extends State<ContactSlide> with AutomaticKeepAliveClientMixin<ContactSlide> {
+class ContactSlideState extends State<ContactSlide> with AutomaticKeepAliveClientMixin<ContactSlide> {
 
-  bool autoVal = false;
-  GlobalKey<FormState> contactKey = new GlobalKey<FormState>();
+  static bool autoVal = false;
+  static GlobalKey<FormState> contactKey = new GlobalKey<FormState>();
+
+  static bool validateContacts() {
+    if (contactKey.currentState.validate()) {
+      contactKey.currentState.save();
+      return true;
+    } else {
+      ContactSlideState().setState(() {
+        autoVal = true;
+      });
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {

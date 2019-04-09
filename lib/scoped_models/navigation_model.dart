@@ -4,6 +4,8 @@ import 'package:recappture2/helpers/my_dialogs.dart';
 import 'dart:io';
 import 'package:recappture2/model/my_data.dart';
 import 'package:recappture2/pages/location/location_slide.dart';
+import 'package:recappture2/pages/contacts/contacts_slide.dart';
+import 'package:recappture2/pages/quantity/quantity_slide.dart';
 
 class NavigationModel extends Model {
   final PageController navigationCtrl = new PageController(initialPage: 0);
@@ -26,18 +28,21 @@ class NavigationModel extends Model {
   }
 
   void next() {
-    if (page.round() == 2) {
+    if (page.round() == 0 || page.round() == 1) {
+      navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+    } else if (page.round() == 2) {
       if (LocationSlideState.validateLocation()) {
         navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
-        print('helllo');
       }
-    }
-    if (page.round() < 5) {
-      //_greenLight = false;
-      navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+    } else if (page.round() == 3) {
+      if (QuantitySlideState.validateQuantity()) {
+        navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+      }
     } else if (page.round() == 5) {
-      navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
-      nextText = 'IZHOD';
+      if (ContactSlideState.validateContacts()) {
+        navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+        nextText = 'IZHOD';
+      }
     } else if (page.round() == 6) {
       MyData.printData();
       exit(0);
