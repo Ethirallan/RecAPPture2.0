@@ -57,13 +57,14 @@ class MyImage extends StatelessWidget {
 }
 
 class MyInput extends StatelessWidget {
-  MyInput({this.hint, this.type, this.onSave, this.validator, this.maxLength, this.ctrl});
+  MyInput({this.hint, this.type, this.onSave, this.validator, this.maxLength, this.ctrl, this.onEditingComplete});
   final String hint;
   final TextInputType type;
   final Function onSave;
   final Function validator;
   final int maxLength;
   final TextEditingController ctrl;
+  final Function onEditingComplete;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -75,6 +76,7 @@ class MyInput extends StatelessWidget {
         controller: ctrl,
         validator: validator,
         maxLength: maxLength,
+        onEditingComplete: onEditingComplete,
         keyboardType: type,
         textAlign: TextAlign.center,
         style: TextStyle(
@@ -94,11 +96,13 @@ class MyInput extends StatelessWidget {
 }
 
 class MyInputWithLabel extends StatelessWidget {
-  MyInputWithLabel({this.label, this.type, this.onSave, this.validator});
+  MyInputWithLabel({this.label, this.type, this.onSave, this.validator, this.onEditingComplete, this.autoVal});
   final String label;
   final TextInputType type;
   final Function onSave;
   final Function validator;
+  final Function onEditingComplete;
+  final bool autoVal;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -108,6 +112,8 @@ class MyInputWithLabel extends StatelessWidget {
         validator: validator,
         keyboardType: type,
         textAlign: TextAlign.center,
+        autovalidate: autoVal,
+        onEditingComplete: onEditingComplete,
         style: TextStyle(
             fontSize: 22.0,
             color: Colors.black

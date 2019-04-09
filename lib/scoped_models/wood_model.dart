@@ -1,7 +1,6 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:recappture2/model/my_data.dart';
 import 'package:recappture2/pages/home/home.dart';
-import 'package:flutter/material.dart';
 
 class WoodModel extends Model {
   int _myTurn = 0;

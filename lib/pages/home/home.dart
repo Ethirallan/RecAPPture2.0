@@ -22,6 +22,14 @@ class HomeState extends State<Home> {
 
   static final NavigationModel navigationModel = new NavigationModel();
 
+  CameraSlide cameraSlide = new CameraSlide();
+  GallerySlide gallerySlide = new GallerySlide();
+  LocationSlide locationSlide = new LocationSlide();
+  QuantitySlide quantitySlide = new QuantitySlide();
+  WoodSlide woodSlide = new WoodSlide();
+  ContactSlide contactSlide = new ContactSlide();
+  EndSlide endSlide = new EndSlide();
+
   @override
   Widget build(BuildContext context) {
     return ScopedModel<NavigationModel>(
@@ -51,13 +59,13 @@ class HomeState extends State<Home> {
                   physics: NeverScrollableScrollPhysics(),
                   controller: navigationModel.navigationCtrl,
                   children: <Widget>[
-                    CameraSlide(),
-                    GallerySlide(),
-                    LocationSlide(),
-                    QuantitySlide(),
-                    WoodSlide(),
-                    ContactSlide(),
-                    EndSlide(),
+                    cameraSlide,
+                    gallerySlide,
+                    locationSlide,
+                    quantitySlide,
+                    woodSlide,
+                    contactSlide,
+                    endSlide,
                   ],
                 ),
                 Positioned(
@@ -73,7 +81,7 @@ class HomeState extends State<Home> {
                   bottom: 80,
                   child: ScopedModelDescendant<NavigationModel>(
                     builder: (context, child, model) {
-                      if (model.greenLight) {
+                      if (model.hasPhoto) {
                         return NextBtn(
                           text: navigationModel.nextText,
                           fun: () => navigationModel.next(),

@@ -17,7 +17,7 @@ class _CameraSlideState extends State<CameraSlide> with AutomaticKeepAliveClient
     if (!GallerySlideState.galleryModel.checkIfGalleryFull()) {
       File imgFile = await ImagePicker.pickImage(source: source);
       GallerySlideState.galleryModel.addImage(imgFile.path);
-      if (GallerySlideState.galleryModel.imgList[0] != '' || GallerySlideState.galleryModel.imgList[1] != '' || GallerySlideState.galleryModel.imgList[2] != '') {
+      if (!GallerySlideState.galleryModel.checkIfGalleryEmpty()) {
         HomeState.navigationModel.next();
       }
     } else {

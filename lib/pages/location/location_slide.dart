@@ -7,33 +7,27 @@ import 'package:recappture2/helpers/my_dialogs.dart';
 import 'package:recappture2/model/my_data.dart';
 
 class LocationSlide extends StatefulWidget {
-
   @override
   LocationSlideState createState() => LocationSlideState();
 }
 
-class LocationSlideState extends State<LocationSlide> with AutomaticKeepAliveClientMixin<LocationSlide> {
-
+class LocationSlideState extends State<LocationSlide>
+    with AutomaticKeepAliveClientMixin<LocationSlide> {
   static GlobalKey<FormState> locationKey = new GlobalKey<FormState>();
   static TextEditingController locationCtrl = new TextEditingController();
-  static bool autoVal = false;
+  bool autoVal = false;
   bool isGettingLocation = false;
 
   static bool validateLocation() {
     if (locationKey.currentState.validate()) {
       locationKey.currentState.save();
       return true;
-    } else {
-      LocationSlideState().setState(() {
-        autoVal = true;
-      });
     }
     return false;
   }
 
   @override
   Widget build(BuildContext context) {
-
     void getLocationDetails() async {
       String res = await getLocationStatus();
       if (res == 'Enabled' || res == 'Denied') {
@@ -54,7 +48,10 @@ class LocationSlideState extends State<LocationSlide> with AutomaticKeepAliveCli
           },
         );
       } else {
-        Scaffold.of(context).showSnackBar(SnackBar(content: Text('Lokacija: ' + res), duration: Duration(seconds: 2),));
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text('Lokacija: ' + res),
+          duration: Duration(seconds: 2),
+        ));
       }
     }
 
@@ -84,6 +81,9 @@ class LocationSlideState extends State<LocationSlide> with AutomaticKeepAliveCli
               ctrl: locationCtrl,
               hint: 'Ulica in hišna št., kraj',
               type: TextInputType.text,
+              onEditingComplete: () => setState(() {
+                    autoVal = true;
+                  }),
               onSave: (String val) => MyData.location,
               validator: MyValidators.validateLocation,
             ),
@@ -105,6 +105,7 @@ class LocationSlideState extends State<LocationSlide> with AutomaticKeepAliveCli
       ),
     );
   }
+
   @override
   bool get wantKeepAlive => true;
 }

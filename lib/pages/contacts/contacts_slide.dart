@@ -11,17 +11,14 @@ class ContactSlide extends StatefulWidget {
 
 class ContactSlideState extends State<ContactSlide> with AutomaticKeepAliveClientMixin<ContactSlide> {
 
-  static bool autoVal = false;
+  static bool autoValEmail = false;
+  static bool autoValPhone = false;
   static GlobalKey<FormState> contactKey = new GlobalKey<FormState>();
 
   static bool validateContacts() {
     if (contactKey.currentState.validate()) {
       contactKey.currentState.save();
       return true;
-    } else {
-      ContactSlideState().setState(() {
-        autoVal = true;
-      });
     }
     return false;
   }
@@ -32,7 +29,6 @@ class ContactSlideState extends State<ContactSlide> with AutomaticKeepAliveClien
       padding: EdgeInsets.only(left: 50, right: 50),
       child: Form(
         key: contactKey,
-        autovalidate: autoVal,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -43,6 +39,11 @@ class ContactSlideState extends State<ContactSlide> with AutomaticKeepAliveClien
             ),
             MyInputWithLabel(
               label: 'Vnesite email',
+              autoVal: autoValEmail,
+              onEditingComplete: () =>
+              setState(() {
+                autoValEmail = true;
+              }),
               type: TextInputType.emailAddress,
               validator: MyValidators.validateEmail,
               onSave: (String val) => MyData.email = val,
@@ -62,6 +63,11 @@ class ContactSlideState extends State<ContactSlide> with AutomaticKeepAliveClien
             MyInputWithLabel(
               label: 'Vnesite telefon',
               type: TextInputType.phone,
+              autoVal: autoValPhone,
+              onEditingComplete: () =>
+                  setState(() {
+                    autoValPhone = true;
+                  }),
               validator: MyValidators.validatePhone,
               onSave: (String val) => MyData.phone = val,
             ),

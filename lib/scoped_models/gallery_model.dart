@@ -1,6 +1,7 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter/material.dart';
 import 'package:recappture2/model/my_data.dart';
+import 'package:recappture2/pages/home/home.dart';
 
 class GalleryModel extends Model {
   PageController galleryCtrl = new PageController();
@@ -11,8 +12,6 @@ class GalleryModel extends Model {
     ''
   ];
 
-  int get noOfImg => _imgList.length;
-
   List<String> get imgList => _imgList;
 
   bool checkIfGalleryFull() {
@@ -22,11 +21,17 @@ class GalleryModel extends Model {
     return false;
   }
 
+  bool checkIfGalleryEmpty() {
+    if (_imgList[0] == '' && _imgList[1] == '' && _imgList[2] == '') {
+      return true;
+    }
+    return false;
+  }
+
   void addImage(String path) {
     if (_imgList[0] == '') {
       _imgList[0] = path;
       MyData.photoList[0] = path;
-      galleryCtrl.animateToPage(0, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
       notifyListeners();
     } else if (_imgList[1] == '') {
       _imgList[1] = path;
@@ -39,11 +44,19 @@ class GalleryModel extends Model {
       galleryCtrl.animateToPage(2, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
       notifyListeners();
     }
+
+    if (!checkIfGalleryEmpty()) {
+      HomeState.navigationModel.setHasPhoto(true);
+      notifyListeners();
+    }
   }
 
   void removeImage(int index) {
     _imgList[index] = '';
     MyData.photoList[index] = '';
+    if (checkIfGalleryEmpty()) {
+      HomeState.navigationModel.setHasPhoto(false);
+    }
     notifyListeners();
   }
 }

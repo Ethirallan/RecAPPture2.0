@@ -11,17 +11,13 @@ class QuantitySlide extends StatefulWidget {
 
 class QuantitySlideState extends State<QuantitySlide> with AutomaticKeepAliveClientMixin<QuantitySlide> {
 
-  static bool autoVal = false;
+  bool autoVal = false;
   static GlobalKey<FormState> quantityKey = new GlobalKey<FormState>();
 
   static bool validateQuantity() {
     if (quantityKey.currentState.validate()) {
       quantityKey.currentState.save();
       return true;
-    } else {
-      QuantitySlideState().setState(() {
-        autoVal = true;
-      });
     }
     return false;
   }
@@ -54,6 +50,10 @@ class QuantitySlideState extends State<QuantitySlide> with AutomaticKeepAliveCli
               hint: 'V kubičnih m (max 20)',
               type: TextInputType.number,
               maxLength: 2,
+              onEditingComplete: () =>
+              setState(() {
+                autoVal = true;
+              }),
               onSave: (String val) => MyData.quantity = double.parse(val),
               validator: MyValidators.validateQuantity,
             ),
