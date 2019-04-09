@@ -56,6 +56,7 @@ class GalleryModel extends Model {
     MyData.photoList[index] = '';
     if (checkIfGalleryEmpty()) {
       HomeState.navigationModel.setHasPhoto(false);
+      HomeState.navigationModel.navigationCtrl.previousPage(duration: Duration(milliseconds: 300), curve: Curves.easeIn);
     }
     notifyListeners();
   }

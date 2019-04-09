@@ -19,7 +19,8 @@ class GallerySlideState extends State<GallerySlide>
       File imgFile = await ImagePicker.pickImage(source: source);
       galleryModel.addImage(imgFile.path);
     } else {
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Maksimalno število slik doseženo (3/3)!')));
+      Scaffold.of(context).showSnackBar(
+          SnackBar(content: Text('Maksimalno število slik doseženo (3/3)!')));
     }
   }
 
@@ -50,12 +51,25 @@ class GallerySlideState extends State<GallerySlide>
                                   ),
                                 ),
                               ),
+                              child: Center(
+                                child: Container(
+                                    height: 50,
+                                    child: GestureDetector(
+                                        onTap: () =>
+                                            galleryModel.removeImage(index),
+                                        child: Image.asset(
+                                            'assets/delete_green.png',
+                                            fit: BoxFit.contain))),
+                              ),
                             );
                       //return child;
                     },
                     child: Padding(
                       padding: EdgeInsets.all(20),
-                      child: Image.asset('assets/photo${index + 1}.png', fit: BoxFit.contain,),
+                      child: Image.asset(
+                        'assets/photo${index + 1}.png',
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   );
                 },
