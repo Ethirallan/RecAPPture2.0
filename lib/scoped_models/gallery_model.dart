@@ -1,26 +1,49 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
+import 'package:recappture2/model/my_data.dart';
 
 class GalleryModel extends Model {
   PageController galleryCtrl = new PageController();
 
-  List<File> _imgList = [];
+  List<String> _imgList = [
+    '',
+    '',
+    ''
+  ];
 
   int get noOfImg => _imgList.length;
 
-  List<File> get imgList => _imgList;
+  List<String> get imgList => _imgList;
 
-  void addImage(File file, BuildContext context) {
-    if (_imgList.length <= 3) {
-      _imgList.add(file);
+  bool checkIfGalleryFull() {
+    if (_imgList[0] != '' && _imgList[1] != '' && _imgList[2] != '') {
+      return true;
+    }
+    return false;
+  }
+
+  void addImage(String path) {
+    if (_imgList[0] == '') {
+      _imgList[0] = path;
+      MyData.photoList[0] = path;
+      galleryCtrl.animateToPage(0, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+      notifyListeners();
+    } else if (_imgList[1] == '') {
+      _imgList[1] = path;
+      MyData.photoList[1] = path;
+      galleryCtrl.animateToPage(1, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+      notifyListeners();
+    } else if (_imgList[2] == '') {
+      _imgList[2] = path;
+      MyData.photoList[2] = path;
+      galleryCtrl.animateToPage(2, duration: Duration(milliseconds: 300), curve: Curves.easeIn);
       notifyListeners();
     }
-    Scaffold.of(context).showSnackBar(SnackBar(content: Text('Maksimalno število slik doseženo (3/3)!')));
   }
 
   void removeImage(int index) {
-    _imgList.removeAt(index);
+    _imgList[index] = '';
+    MyData.photoList[index] = '';
     notifyListeners();
   }
 }

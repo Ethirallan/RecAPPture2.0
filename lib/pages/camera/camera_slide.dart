@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:recappture2/helpers/components.dart';
 import 'package:recappture2/helpers/my_colors.dart';
+import 'package:recappture2/pages/gallery/gallery_slide.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:recappture2/pages/home/home.dart';
 
 class CameraSlide extends StatefulWidget {
   @override
@@ -8,11 +12,23 @@ class CameraSlide extends StatefulWidget {
 }
 
 class _CameraSlideState extends State<CameraSlide> with AutomaticKeepAliveClientMixin<CameraSlide> {
+
+  Future getImage(ImageSource source) async {
+    if (!GallerySlideState.galleryModel.checkIfGalleryFull()) {
+      File imgFile = await ImagePicker.pickImage(source: source);
+      GallerySlideState.galleryModel.addImage(imgFile.path);
+      if (GallerySlideState.galleryModel.imgList[0] != '' || GallerySlideState.galleryModel.imgList[1] != '' || GallerySlideState.galleryModel.imgList[2] != '') {
+        HomeState.navigationModel.next();
+      }
+    } else {
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Maksimalno število slik doseženo (3/3)!')));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 50, right: 50),
-
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -28,7 +44,7 @@ class _CameraSlideState extends State<CameraSlide> with AutomaticKeepAliveClient
             child: MyImgBtn(
               height: 120,
               asset: 'assets/add_picture.png',
-              fun: null,
+              fun: () => getImage(ImageSource.gallery),
             ),
           ),
           MyText(
@@ -41,7 +57,7 @@ class _CameraSlideState extends State<CameraSlide> with AutomaticKeepAliveClient
             child: MyImgBtn(
               height: 50,
               asset: 'assets/camera.png',
-              fun: null,
+              fun: () => getImage(ImageSource.camera),
             ),
           ),
         ],

@@ -9,11 +9,27 @@ import 'package:recappture2/model/my_data.dart';
 class LocationSlide extends StatefulWidget {
 
   @override
-  _LocationSlideState createState() => _LocationSlideState();
+  LocationSlideState createState() => LocationSlideState();
 }
 
-class _LocationSlideState extends State<LocationSlide> with AutomaticKeepAliveClientMixin<LocationSlide> {
-  final TextEditingController locationCtrl = new TextEditingController();
+class LocationSlideState extends State<LocationSlide> with AutomaticKeepAliveClientMixin<LocationSlide> {
+
+  static GlobalKey<FormState> locationKey = new GlobalKey<FormState>();
+  static TextEditingController locationCtrl = new TextEditingController();
+  static bool autoVal = false;
+  bool isGettingLocation = false;
+
+  static bool validateLocation() {
+    if (locationKey.currentState.validate()) {
+      locationKey.currentState.save();
+      return true;
+    } else {
+      LocationSlideState().setState(() {
+        autoVal = true;
+      });
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,44 +60,48 @@ class _LocationSlideState extends State<LocationSlide> with AutomaticKeepAliveCl
 
     return Container(
       padding: EdgeInsets.only(left: 50, right: 50),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          MyImage(
-            height: 100,
-            asset: 'assets/location.png',
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 20),
-            child: MyText(
-              text: 'Lokacija odsluženega lesa',
-              size: 25,
-              color: Colors.grey,
-              fontWeight: FontWeight.bold,
+      child: Form(
+        key: locationKey,
+        autovalidate: autoVal,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            MyImage(
+              height: 100,
+              asset: 'assets/location.png',
             ),
-          ),
-          MyInput(
-            ctrl: locationCtrl,
-            hint: 'Ulica in hišna št., kraj',
-            type: TextInputType.text,
-            onSave: (String val) => MyData.location,
-            validator: MyValidators.validateLocation,
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 40, bottom: 20),
-            child: MyText(
-              text: 'Poišči mojo lokacijo',
-              size: 22,
-              color: MyColors.grey,
+            Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: MyText(
+                text: 'Lokacija odsluženega lesa',
+                size: 25,
+                color: Colors.grey,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          MyImgBtn(
-            height: 45,
-            asset: 'assets/get_location_green.png',
-            fun: getLocationDetails,
-          ),
-        ],
+            MyInput(
+              ctrl: locationCtrl,
+              hint: 'Ulica in hišna št., kraj',
+              type: TextInputType.text,
+              onSave: (String val) => MyData.location,
+              validator: MyValidators.validateLocation,
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 40, bottom: 20),
+              child: MyText(
+                text: 'Poišči mojo lokacijo',
+                size: 22,
+                color: MyColors.grey,
+              ),
+            ),
+            MyImgBtn(
+              height: 45,
+              asset: 'assets/get_location_green.png',
+              fun: getLocationDetails,
+            ),
+          ],
+        ),
       ),
     );
   }

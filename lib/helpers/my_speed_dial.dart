@@ -40,9 +40,9 @@ class MySpeedDialState extends State<MySpeedDial> with TickerProviderStateMixin 
               child: Icon(icons[index], color: foregroundColor),
               onPressed: () {
                 if (index == 0) {
-                  //GallerySlideState().getImage(ImageSource.camera);
+                  GallerySlideState().getImage(ImageSource.camera, context);
                 } else {
-                  //GallerySlideState().getImage(ImageSource.gallery);
+                  GallerySlideState().getImage(ImageSource.gallery, context);
                 }
                 if (_controller.isDismissed) {
                   _controller.forward();
@@ -64,7 +64,7 @@ class MySpeedDialState extends State<MySpeedDial> with TickerProviderStateMixin 
               return Transform(
                 transform: Matrix4.rotationZ(_controller.value * 0.5 * math.pi),
                 alignment: FractionalOffset.center,
-                child: Icon(_controller.isDismissed ? Icons.add : Icons.close, size: 30,),
+                child: Icon(_controller.isDismissed ? Icons.add : Icons.close, size: 30, color: Colors.white,),
               );
             },
           ),

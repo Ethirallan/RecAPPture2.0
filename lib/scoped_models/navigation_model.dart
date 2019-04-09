@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:recappture2/helpers/my_dialogs.dart';
 import 'dart:io';
 import 'package:recappture2/model/my_data.dart';
+import 'package:recappture2/pages/location/location_slide.dart';
 
 class NavigationModel extends Model {
   final PageController navigationCtrl = new PageController(initialPage: 0);
@@ -25,6 +26,12 @@ class NavigationModel extends Model {
   }
 
   void next() {
+    if (page.round() == 2) {
+      if (LocationSlideState.validateLocation()) {
+        navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+        print('helllo');
+      }
+    }
     if (page.round() < 5) {
       //_greenLight = false;
       navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);

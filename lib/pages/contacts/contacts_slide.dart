@@ -10,57 +10,65 @@ class ContactSlide extends StatefulWidget {
 }
 
 class _ContactSlideState extends State<ContactSlide> with AutomaticKeepAliveClientMixin<ContactSlide> {
+
+  bool autoVal = false;
+  GlobalKey<FormState> contactKey = new GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 50, right: 50),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          MyImage(
-            height: 40,
-            asset: 'assets/email.png',
-          ),
-          MyInputWithLabel(
-            label: 'Vnesite email',
-            type: TextInputType.emailAddress,
-            validator: MyValidators.validateEmail,
-            onSave: (String val) => MyData.email = val,
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 40, bottom: 40),
-            child: MyText(
-              text: 'in po želji še',
-              size: 22,
+      child: Form(
+        key: contactKey,
+        autovalidate: autoVal,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            MyImage(
+              height: 40,
+              asset: 'assets/email.png',
+            ),
+            MyInputWithLabel(
+              label: 'Vnesite email',
+              type: TextInputType.emailAddress,
+              validator: MyValidators.validateEmail,
+              onSave: (String val) => MyData.email = val,
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 40, bottom: 40),
+              child: MyText(
+                text: 'in po želji še',
+                size: 22,
+                color: MyColors.grey,
+              ),
+            ),
+            MyImage(
+              height: 40,
+              asset: 'assets/call.png',
+            ),
+            MyInputWithLabel(
+              label: 'Vnesite telefon',
+              type: TextInputType.phone,
+              validator: MyValidators.validatePhone,
+              onSave: (String val) => MyData.phone = val,
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 40, bottom: 2),
+              child: MyText(
+                text: 'Varnostno opozorilo',
+                size: 22,
+                color: MyColors.grey,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            MyText(
+              text: 'Vaši podatki bodo strogo varovani. Uporabili jih bomo le za obveščanje o naši odločitvi in za organizacijo prevoza.',
+              size: 16,
               color: MyColors.grey,
             ),
-          ),
-          MyImage(
-            height: 40,
-            asset: 'assets/call.png',
-          ),
-          MyInputWithLabel(
-            label: 'Vnesite telefon',
-            type: TextInputType.phone,
-            validator: MyValidators.validatePhone,
-            onSave: (String val) => MyData.phone = val,
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 40, bottom: 2),
-            child: MyText(
-              text: 'Varnostno opozorilo',
-              size: 22,
-              color: MyColors.grey,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          MyText(
-            text: 'Vaši podatki bodo strogo varovani. Uporabili jih bomo le za obveščanje o naši odločitvi in za organizacijo prevoza.',
-            size: 16,
-            color: MyColors.grey,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
