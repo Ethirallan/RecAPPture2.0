@@ -46,7 +46,7 @@ class GalleryModel extends Model {
     }
 
     if (!checkIfGalleryEmpty()) {
-      HomeState.navigationModel.setHasPhoto(true);
+      HomeState.navigationModel.setBtnVisibility(true);
       notifyListeners();
     }
   }
@@ -55,7 +55,7 @@ class GalleryModel extends Model {
     _imgList[index] = '';
     MyData.photoList[index] = '';
     if (checkIfGalleryEmpty()) {
-      HomeState.navigationModel.setHasPhoto(false);
+      HomeState.navigationModel.setBtnVisibility(false);
       HomeState.navigationModel.navigationCtrl.previousPage(duration: Duration(milliseconds: 300), curve: Curves.easeIn);
     }
     notifyListeners();

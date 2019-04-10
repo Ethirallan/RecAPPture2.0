@@ -8,6 +8,8 @@ class WoodModel extends Model {
   int _deciduousCount = 0;
   int _coniferousCount = 0;
 
+  PageController woodCtrl = new PageController(initialPage: 0);
+
   int get turn => _myTurn;
 
   //listavec
@@ -21,6 +23,7 @@ class WoodModel extends Model {
       }
       _myTurn++;
       _deciduousCount++;
+      woodCtrl.nextPage(duration: Duration(milliseconds: 200), curve: Curves.linear);
     } else if (_myTurn == 2) {
       if (MyData.woodType == null) {
         MyData.quiz3 = 1;
@@ -31,10 +34,11 @@ class WoodModel extends Model {
           MyData.woodType = 0;
         }
         _myTurn++;
+        woodCtrl.nextPage(duration: Duration(milliseconds: 100), curve: Curves.linear);
+        HomeState.navigationModel.setBtnVisibility(true);
         HomeState.navigationModel.next(context);
       }
     }
-    notifyListeners();
   }
 
   //iglavec
@@ -48,6 +52,7 @@ class WoodModel extends Model {
       }
       _myTurn++;
       _coniferousCount++;
+      woodCtrl.nextPage(duration: Duration(milliseconds: 200), curve: Curves.linear);
     } else if (_myTurn == 2) {
       if (MyData.woodType == null) {
         MyData.quiz3 = 0;
@@ -58,9 +63,10 @@ class WoodModel extends Model {
           MyData.woodType = 0;
         }
         _myTurn++;
+        woodCtrl.nextPage(duration: Duration(milliseconds: 100), curve: Curves.linear);
+        HomeState.navigationModel.setBtnVisibility(true);
         HomeState.navigationModel.next(context);
       }
     }
-    notifyListeners();
   }
 }

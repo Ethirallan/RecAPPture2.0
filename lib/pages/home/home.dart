@@ -83,7 +83,7 @@ class HomeState extends State<Home> {
                     bottom: 80,
                     child: ScopedModelDescendant<NavigationModel>(
                       builder: (context, child, model) {
-                        if (model.hasPhoto) {
+                        if (model.showBtn) {
                           return NextBtn(
                             text: navigationModel.nextText,
                             fun: () => navigationModel.next(context),

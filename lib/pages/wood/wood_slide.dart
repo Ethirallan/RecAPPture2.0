@@ -1,123 +1,106 @@
 import 'package:flutter/material.dart';
 import 'package:recappture2/helpers/components.dart';
 import 'package:recappture2/helpers/my_colors.dart';
-import 'package:scoped_model/scoped_model.dart';
 import 'package:recappture2/scoped_models/wood_model.dart';
 
 class WoodSlide extends StatefulWidget {
   @override
-  _WoodSlideState createState() => _WoodSlideState();
+  WoodSlideState createState() => WoodSlideState();
 }
 
-class _WoodSlideState extends State<WoodSlide> with AutomaticKeepAliveClientMixin<WoodSlide> {
+class WoodSlideState extends State<WoodSlide> with AutomaticKeepAliveClientMixin<WoodSlide> {
 
-  final WoodModel woodModel = new WoodModel();
+  static final WoodModel woodModel = new WoodModel();
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModel<WoodModel>(
-      model: woodModel,
-      child: Container(
-        padding: EdgeInsets.only(left: 50, right: 50),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            MyImage(
-              height: 60,
-              asset: 'assets/wood.png',
+    return Container(
+      padding: EdgeInsets.only(left: 50, right: 50),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          MyImage(
+            height: 60,
+            asset: 'assets/wood.png',
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 20),
+            child: MyText(
+              text: 'Izberite vrsto lesa',
+              size: 25,
+              color: MyColors.grey,
+              fontWeight: FontWeight.bold,
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 20),
-              child: MyText(
-                text: 'Izberite vrsto lesa',
-                size: 25,
-                color: MyColors.grey,
-                fontWeight: FontWeight.bold,
-              ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 10, bottom: 4),
+            child: MyText(
+              text: 'Kateri sliki je les bolj podoben?',
+              size: 18,
+              color: MyColors.grey,
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 10, bottom: 4),
-              child: MyText(
-                text: 'Kateri sliki je les bolj podoben?',
-                size: 18,
-                color: MyColors.grey,
-              ),
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 30),
+            color: Colors.white10,
+            height: MediaQuery.of(context).size.height / 2,
+            child: PageView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              controller: woodModel.woodCtrl,
+              scrollDirection: Axis.vertical,
+              itemCount: 4,
+              itemBuilder: (context, index) {
+                return woodPage(index, () => woodModel.addDeciduous(context), () => woodModel.addConiferous(context));
+              },
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget woodPage(int index, Function funDeciduous, funConiferous) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.all(6),
+            child: Column(
               children: <Widget>[
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => woodModel.addDeciduous(context),
-                    child: Padding(
-                      padding: EdgeInsets.all(4),
-                      child: Column(
-                        children: <Widget>[
-                          ScopedModelDescendant<WoodModel>(
-                            builder: (context, child, model) {
-                              String deciduous;
-                              if (model.turn == 0) {
-                                deciduous = 'assets/listavec1.png';
-                              } else if (model.turn == 1) {
-                                deciduous = 'assets/listavec2.png';
-                              } else {
-                                deciduous = 'assets/listavec3.png';
-                              }
-                              return Image.asset(deciduous, fit: BoxFit.contain,);
-                            },
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 4),
-                            child: MyText(
-                              text: 'Listavec',
-                              size: 16,
-                              color: MyColors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                GestureDetector(
+                  onTap: funDeciduous,
+                  child: Image.asset('assets/listavec${index + 1}.png', fit: BoxFit.contain,),
                 ),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => woodModel.addConiferous(context),
-                    child: Padding(
-                      padding: EdgeInsets.all(4),
-                      child: Column(
-                        children: <Widget>[
-                          ScopedModelDescendant<WoodModel>(
-                            builder: (context, child, model) {
-                              String coniferous;
-                              if (model.turn == 0) {
-                                coniferous = 'assets/iglavec1.png';
-                              } else if (model.turn == 1) {
-                                coniferous = 'assets/iglavec2.png';
-                              } else {
-                                coniferous = 'assets/iglavec3.png';
-                              }
-                              return Image.asset(coniferous, fit: BoxFit.contain,);
-                            },
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 4),
-                            child: MyText(
-                              text: 'Iglavec',
-                              size: 16,
-                              color: MyColors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                MyText(
+                  text: 'Listavec',
+                  color: MyColors.grey,
+                  size: 18,
                 ),
               ],
             ),
-          ],
+          ),
+        ),Expanded(
+          child: Padding(
+            padding: EdgeInsets.all(6),
+            child: Column(
+              children: <Widget>[
+                GestureDetector(
+                  onTap: funConiferous,
+                  child: Image.asset('assets/iglavec${index + 1}.png', fit: BoxFit.contain,),
+                ),
+                MyText(
+                  text: 'Iglavec',
+                  color: MyColors.grey,
+                  size: 18,
+                ),
+              ],
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 

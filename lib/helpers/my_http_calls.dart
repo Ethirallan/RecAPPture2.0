@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:recappture2/model/my_data.dart';
-import 'package:dio/dio.dart';
 
 const String api = 'http://88.200.63.178:3000';
 
@@ -28,7 +27,6 @@ Future sendUser() async {
   MyData.userId = myData['message']['insertId'];
   await sendOrder();
 }
-
 
 Future sendOrder() async {
   String url = '$api/order/';
@@ -61,38 +59,46 @@ Future sendQuiz() async {
   await sendImage();
 }
 
-
-
-
 Future sendImage() async {
   String url = '$api/image/';
-  int orderId = MyData.orderId;
+  String orderId = MyData.orderId.toString();
 
   if (MyData.photoList[0] != '') {
     String base64Image = base64Encode(File(MyData.photoList[0]).readAsBytesSync());
     String photo = 'data:image/jpeg;base64,' + base64Image;
 
-    FormData formData = new FormData.from({
-      "order_id": orderId.toString(),
-      "order_img_base64": photo,
+    await http.post(url, body: {
+      'order_id': orderId,
+      'order_img_base64': photo
+    }).then((res) {
+      print(res.statusCode);
+    }).catchError((err) {
+      print(err);
     });
-    var res = await Dio().post(url, data: formData);
-
-    print(res.statusCode);
-    print(res);
-
   }
   if (MyData.photoList[1] != '') {
     String base64Image = base64Encode(File(MyData.photoList[1]).readAsBytesSync());
     String photo = 'data:image/jpeg;base64,' + base64Image;
-    Map myBody = {'order_id': orderId, 'order_img_base64': photo};
-    await http.post(url, headers: {'Content-Type': 'application/json'}, body: json.encode(myBody));
+    await http.post(url, body: {
+      'order_id': orderId,
+      'order_img_base64': photo
+    }).then((res) {
+      print(res.statusCode);
+    }).catchError((err) {
+      print(err);
+    });
   }
   if (MyData.photoList[2] != '') {
     String base64Image = base64Encode(File(MyData.photoList[2]).readAsBytesSync());
     String photo = 'data:image/jpeg;base64,' + base64Image;
-    Map myBody = {'order_id': orderId, 'order_img_base64': photo};
-    await http.post(url, headers: {'Content-Type': 'application/json'}, body: json.encode(myBody));
+    await http.post(url, body: {
+      'order_id': orderId,
+      'order_img_base64': photo
+    }).then((res) {
+      print(res.statusCode);
+    }).catchError((err) {
+      print(err);
+    });
   }
 }
 

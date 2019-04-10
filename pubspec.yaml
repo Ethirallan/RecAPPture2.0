@@ -29,7 +29,6 @@ dependencies:
   access_settings_menu: ^0.0.1
   scoped_model: ^1.0.1
   flutter_launcher_icons: ^0.7.0
-  dio: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -67,10 +66,12 @@ flutter:
     - iglavec1.png
     - iglavec2.png
     - iglavec3.png
+    - iglavec4.png
     - info.png
     - listavec1.png
     - listavec2.png
     - listavec3.png
+    - listavec4.png
     - location.png
     - photo1.png
     - photo2.png
