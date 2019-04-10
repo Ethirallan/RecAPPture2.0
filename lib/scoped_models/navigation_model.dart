@@ -45,6 +45,7 @@ class NavigationModel extends Model {
       }
     } else if (page == 5) {
       if (ContactSlideState.validateContacts()) {
+        /*
         showDialog(
           barrierDismissible: false,
           context: context,
@@ -52,9 +53,10 @@ class NavigationModel extends Model {
             return loadingDialog;
           },
         );
+         */
         await sendUser();
-        Navigator.pop(context);
-        navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+        //Navigator.pop(context);
+        //navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
         nextText = 'IZHOD';
       }
     } else if (page == 6) {

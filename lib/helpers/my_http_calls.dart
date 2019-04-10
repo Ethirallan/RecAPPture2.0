@@ -61,6 +61,9 @@ Future sendQuiz() async {
   await sendImage();
 }
 
+
+
+
 Future sendImage() async {
   String url = '$api/image/';
   int orderId = MyData.orderId;
@@ -70,28 +73,26 @@ Future sendImage() async {
     String photo = 'data:image/jpeg;base64,' + base64Image;
 
     FormData formData = new FormData.from({
-      "order_id": orderId,
+      "order_id": orderId.toString(),
       "order_img_base64": photo,
     });
-    await Dio().post(url, data: formData);
+    var res = await Dio().post(url, data: formData);
+
+    print(res.statusCode);
+    print(res);
+
   }
   if (MyData.photoList[1] != '') {
     String base64Image = base64Encode(File(MyData.photoList[1]).readAsBytesSync());
     String photo = 'data:image/jpeg;base64,' + base64Image;
-    FormData formData = new FormData.from({
-      "order_id": orderId,
-      "order_img_base64": photo,
-    });
-    await Dio().post(url, data: formData);
+    Map myBody = {'order_id': orderId, 'order_img_base64': photo};
+    await http.post(url, headers: {'Content-Type': 'application/json'}, body: json.encode(myBody));
   }
   if (MyData.photoList[2] != '') {
     String base64Image = base64Encode(File(MyData.photoList[2]).readAsBytesSync());
     String photo = 'data:image/jpeg;base64,' + base64Image;
-    FormData formData = new FormData.from({
-      "order_id": orderId,
-      "order_img_base64": photo,
-    });
-    await Dio().post(url, data: formData);
+    Map myBody = {'order_id': orderId, 'order_img_base64': photo};
+    await http.post(url, headers: {'Content-Type': 'application/json'}, body: json.encode(myBody));
   }
 }
 

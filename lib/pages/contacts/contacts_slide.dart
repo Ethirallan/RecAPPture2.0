@@ -3,6 +3,7 @@ import 'package:recappture2/helpers/components.dart';
 import 'package:recappture2/helpers/my_colors.dart';
 import 'package:recappture2/helpers/validators.dart';
 import 'package:recappture2/model/my_data.dart';
+import 'package:recappture2/pages/home/home.dart';
 
 class ContactSlide extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class ContactSlideState extends State<ContactSlide> with AutomaticKeepAliveClien
   static bool autoValEmail = false;
   static bool autoValPhone = false;
   static GlobalKey<FormState> contactKey = new GlobalKey<FormState>();
-
+  final FocusNode phoneNode = new FocusNode();
   static bool validateContacts() {
     if (contactKey.currentState.validate()) {
       contactKey.currentState.save();
@@ -40,6 +41,8 @@ class ContactSlideState extends State<ContactSlide> with AutomaticKeepAliveClien
             MyInputWithLabel(
               label: 'Vnesite email',
               autoVal: autoValEmail,
+              inputAction: TextInputAction.next,
+              onFieldSubmitted: (String val) => FocusScope.of(context).requestFocus(phoneNode),
               onEditingComplete: () =>
               setState(() {
                 autoValEmail = true;
@@ -63,7 +66,13 @@ class ContactSlideState extends State<ContactSlide> with AutomaticKeepAliveClien
             MyInputWithLabel(
               label: 'Vnesite telefon',
               type: TextInputType.phone,
+              inputAction: TextInputAction.go,
               autoVal: autoValPhone,
+              focusNode: phoneNode,
+              onFieldSubmitted: (String val) {
+                FocusScope.of(context).requestFocus(new FocusNode());
+                HomeState.navigationModel.next(context);
+              },
               onEditingComplete: () =>
                   setState(() {
                     autoValPhone = true;

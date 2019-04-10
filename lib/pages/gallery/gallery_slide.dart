@@ -17,7 +17,9 @@ class GallerySlideState extends State<GallerySlide>
   Future getImage(ImageSource source, BuildContext context) async {
     if (!galleryModel.checkIfGalleryFull()) {
       File imgFile = await ImagePicker.pickImage(source: source);
-      galleryModel.addImage(imgFile.path);
+      if (imgFile != null) {
+        galleryModel.addImage(imgFile.path);
+      }
     } else {
       Scaffold.of(context).showSnackBar(
           SnackBar(content: Text('Maksimalno število slik doseženo (3/3)!')));

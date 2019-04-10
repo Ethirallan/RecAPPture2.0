@@ -57,7 +57,7 @@ class MyImage extends StatelessWidget {
 }
 
 class MyInput extends StatelessWidget {
-  MyInput({this.hint, this.type, this.onSave, this.validator, this.maxLength, this.ctrl, this.onEditingComplete});
+  MyInput({this.hint, this.type, this.onSave, this.validator, this.maxLength, this.ctrl, this.onEditingComplete, this.inputAction, this.onFieldSubmitted});
   final String hint;
   final TextInputType type;
   final Function onSave;
@@ -65,6 +65,8 @@ class MyInput extends StatelessWidget {
   final int maxLength;
   final TextEditingController ctrl;
   final Function onEditingComplete;
+  final TextInputAction inputAction;
+  final Function onFieldSubmitted;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -78,6 +80,8 @@ class MyInput extends StatelessWidget {
         maxLength: maxLength,
         onEditingComplete: onEditingComplete,
         keyboardType: type,
+        textInputAction: inputAction,
+        onFieldSubmitted: onFieldSubmitted,
         textAlign: TextAlign.center,
         style: TextStyle(
             fontSize: 22.0,
@@ -96,13 +100,16 @@ class MyInput extends StatelessWidget {
 }
 
 class MyInputWithLabel extends StatelessWidget {
-  MyInputWithLabel({this.label, this.type, this.onSave, this.validator, this.onEditingComplete, this.autoVal});
+  MyInputWithLabel({this.label, this.type, this.onSave, this.focusNode, this.validator, this.onEditingComplete, this.autoVal, this.inputAction, this.onFieldSubmitted});
   final String label;
   final TextInputType type;
   final Function onSave;
   final Function validator;
   final Function onEditingComplete;
   final bool autoVal;
+  final TextInputAction inputAction;
+  final Function onFieldSubmitted;
+  final FocusNode focusNode;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -110,6 +117,9 @@ class MyInputWithLabel extends StatelessWidget {
       child: TextFormField(
         onSaved: onSave,
         validator: validator,
+        focusNode: focusNode,
+        textInputAction: inputAction,
+        onFieldSubmitted: onFieldSubmitted,
         keyboardType: type,
         textAlign: TextAlign.center,
         autovalidate: autoVal,

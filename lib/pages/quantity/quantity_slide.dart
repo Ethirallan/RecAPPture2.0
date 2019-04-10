@@ -3,6 +3,7 @@ import 'package:recappture2/helpers/components.dart';
 import 'package:recappture2/helpers/my_colors.dart';
 import 'package:recappture2/helpers/validators.dart';
 import 'package:recappture2/model/my_data.dart';
+import 'package:recappture2/pages/home/home.dart';
 
 class QuantitySlide extends StatefulWidget {
   @override
@@ -11,7 +12,6 @@ class QuantitySlide extends StatefulWidget {
 
 class QuantitySlideState extends State<QuantitySlide> with AutomaticKeepAliveClientMixin<QuantitySlide> {
 
-  bool autoVal = false;
   static GlobalKey<FormState> quantityKey = new GlobalKey<FormState>();
 
   static bool validateQuantity() {
@@ -28,7 +28,7 @@ class QuantitySlideState extends State<QuantitySlide> with AutomaticKeepAliveCli
       padding: EdgeInsets.only(left: 50, right: 50),
       child: Form(
         key: quantityKey,
-        autovalidate: autoVal,
+        autovalidate: true,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -49,11 +49,12 @@ class QuantitySlideState extends State<QuantitySlide> with AutomaticKeepAliveCli
             MyInput(
               hint: 'V kubičnih m (max 20)',
               type: TextInputType.number,
+              onFieldSubmitted: (String val) {
+                FocusScope.of(context).requestFocus(new FocusNode());
+                HomeState.navigationModel.next(context);
+              },
+              inputAction: TextInputAction.go,
               maxLength: 2,
-              onEditingComplete: () =>
-              setState(() {
-                autoVal = true;
-              }),
               onSave: (String val) => MyData.quantity = double.parse(val),
               validator: MyValidators.validateQuantity,
             ),

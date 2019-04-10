@@ -50,49 +50,52 @@ class HomeState extends State<Home> {
             navigationModel.goBack(context);
           }
         },
-        child: Scaffold(
-            resizeToAvoidBottomPadding: false,
-            body: Stack(
-              fit: StackFit.expand,
-              children: <Widget>[
-                PageView(
-                  physics: NeverScrollableScrollPhysics(),
-                  controller: navigationModel.navigationCtrl,
-                  children: <Widget>[
-                    cameraSlide,
-                    gallerySlide,
-                    locationSlide,
-                    quantitySlide,
-                    woodSlide,
-                    contactSlide,
-                    endSlide,
-                  ],
-                ),
-                Positioned(
-                  child: MLogo(),
-                  bottom: 4.0,
-                ),
-                Positioned(
-                  top: 50,
-                  left: 20,
-                  child: MyBackButton(fun: () => navigationModel.goBack(context),),
-                ),
-                Positioned(
-                  bottom: 80,
-                  child: ScopedModelDescendant<NavigationModel>(
-                    builder: (context, child, model) {
-                      if (model.hasPhoto) {
-                        return NextBtn(
-                          text: navigationModel.nextText,
-                          fun: () => navigationModel.next(context),
-                        );
-                      }
-                      return Container();
-                    },
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
+          child: Scaffold(
+              resizeToAvoidBottomPadding: false,
+              body: Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  PageView(
+                    physics: NeverScrollableScrollPhysics(),
+                    controller: navigationModel.navigationCtrl,
+                    children: <Widget>[
+                      cameraSlide,
+                      gallerySlide,
+                      locationSlide,
+                      quantitySlide,
+                      woodSlide,
+                      contactSlide,
+                      endSlide,
+                    ],
                   ),
-                ),
-              ],
-            )),
+                  Positioned(
+                    child: MLogo(),
+                    bottom: 4.0,
+                  ),
+                  Positioned(
+                    top: 50,
+                    left: 20,
+                    child: MyBackButton(fun: () => navigationModel.goBack(context),),
+                  ),
+                  Positioned(
+                    bottom: 80,
+                    child: ScopedModelDescendant<NavigationModel>(
+                      builder: (context, child, model) {
+                        if (model.hasPhoto) {
+                          return NextBtn(
+                            text: navigationModel.nextText,
+                            fun: () => navigationModel.next(context),
+                          );
+                        }
+                        return Container();
+                      },
+                    ),
+                  ),
+                ],
+              )),
+        ),
       ),
     );
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:access_settings_menu/access_settings_menu.dart';
 
 Widget loadingDialog = WillPopScope(
@@ -97,11 +96,11 @@ Widget openSettings(BuildContext context) {
   openSettingsMenu() async {
     var resultSettingsOpening = false;
     try {
-      resultSettingsOpening =
-      await AccessSettingsMenu.openSettings(settingsType: 'ACTION_LOCATION_SOURCE_SETTINGS');
+      resultSettingsOpening = await AccessSettingsMenu.openSettings(settingsType: 'ACTION_LOCATION_SOURCE_SETTINGS');
     } catch (e) {
       resultSettingsOpening = false;
     }
+    return resultSettingsOpening;
   }
 
   return WillPopScope(

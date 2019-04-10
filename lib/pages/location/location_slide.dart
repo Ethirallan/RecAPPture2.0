@@ -5,6 +5,7 @@ import 'package:recappture2/helpers/validators.dart';
 import 'package:recappture2/helpers/my_geolocator.dart';
 import 'package:recappture2/helpers/my_dialogs.dart';
 import 'package:recappture2/model/my_data.dart';
+import 'package:recappture2/pages/home/home.dart';
 
 class LocationSlide extends StatefulWidget {
   @override
@@ -54,7 +55,6 @@ class LocationSlideState extends State<LocationSlide>
         ));
       }
     }
-
     return Container(
       padding: EdgeInsets.only(left: 50, right: 50),
       child: Form(
@@ -81,6 +81,11 @@ class LocationSlideState extends State<LocationSlide>
               ctrl: locationCtrl,
               hint: 'Ulica in hišna št., kraj',
               type: TextInputType.text,
+              inputAction: TextInputAction.go,
+              onFieldSubmitted: (String val) {
+                FocusScope.of(context).requestFocus(new FocusNode());
+                HomeState.navigationModel.next(context);
+              },
               onEditingComplete: () => setState(() {
                     autoVal = true;
                   }),
