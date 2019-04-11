@@ -55,7 +55,7 @@ class QuantitySlideState extends State<QuantitySlide> with AutomaticKeepAliveCli
               },
               inputAction: TextInputAction.go,
               maxLength: 2,
-              onSave: (String val) => MyData.quantity = double.parse(val),
+              onSave: (String val) => MyData.quantity = int.parse(val),
               validator: MyValidators.validateQuantity,
             ),
           ],

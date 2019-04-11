@@ -9,13 +9,15 @@ class MyValidators {
   }
 
   static String validateQuantity(String value) {
-    if (value != null && value.length > 0) {
-      String val = value.replaceAll('.', '');
-      val = val.replaceAll(',', '');
-      if (double.parse(val) > 20) {
+    String val = value.replaceAll('.', '');
+    val = val.replaceAll(',', '');
+    val = val.replaceAll(' ', '');
+    val = val.replaceAll('-', '');
+    if (val != null && val.length > 0) {
+      if (int.parse(val) > 20) {
         return 'Maksimalno: 20';
       }
-    } else if (value.length == 0) {
+    } else if (val.length == 0) {
       return 'Vnesite približno količino';
     }
     return null;

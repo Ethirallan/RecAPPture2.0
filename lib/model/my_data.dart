@@ -14,7 +14,7 @@ class MyData {
   static String location;
   static double lat;
   static double lng;
-  static double quantity;
+  static int quantity;
   static int woodType;
   static int quiz1;
   static int quiz2;
@@ -26,17 +26,15 @@ class MyData {
   static int orderId;
 
   static void printData() {
-    print(location);
-    print(lat);
-    print(lng);
-    print(quantity);
-    print(woodType);
-    print(quiz1);
-    print(quiz2);
-    print(quiz3);
-    print(phone);
-    print(email);
-    print(userId);
-    print(orderId);
+    print('loc: ' + location);
+    print('lat: ' + lat.toString());
+    print('lng: ' + lng.toString());
+    print('quan: ' + quantity.toString());
+    print('type: ' + woodType.toString());
+    print('q1 ' + quiz1.toString());
+    print('q2: ' + quiz2.toString());
+    print('q3: ' + quiz3.toString());
+    print('phone: ' + phone);
+    print('mail: ' + email);
   }
 }

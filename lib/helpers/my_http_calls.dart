@@ -7,6 +7,7 @@ import 'package:recappture2/model/my_data.dart';
 const String api = 'http://88.200.63.178:3000';
 
 Future sendUser() async {
+  MyData.printData();
   var url = '$api/user';
 
   Map data = {
@@ -33,8 +34,8 @@ Future sendOrder() async {
   Map myBody = {
     'user_id': MyData.userId,
     'address': MyData.location,
-    'lat': MyData.lat,
-    'lng': MyData.lng,
+    'lat': MyData.lat != null ? MyData.lat : 0,
+    'lng': MyData.lng != null ? MyData.lng : 0,
     'kub': MyData.quantity,
     'wood_type': MyData.woodType,
   };
