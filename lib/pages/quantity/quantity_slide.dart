@@ -48,7 +48,7 @@ class QuantitySlideState extends State<QuantitySlide> with AutomaticKeepAliveCli
             ),
             MyInput(
               hint: 'V kubičnih m (max 20)',
-              type: TextInputType.number,
+              type: TextInputType.numberWithOptions(decimal: false),
               onFieldSubmitted: (String val) {
                 FocusScope.of(context).requestFocus(new FocusNode());
                 HomeState.navigationModel.next(context);

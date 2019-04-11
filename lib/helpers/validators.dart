@@ -10,7 +10,9 @@ class MyValidators {
 
   static String validateQuantity(String value) {
     if (value != null && value.length > 0) {
-      if (int.parse(value) > 20) {
+      String val = value.replaceAll('.', '');
+      val = val.replaceAll(',', '');
+      if (double.parse(val) > 20) {
         return 'Maksimalno: 20';
       }
     } else if (value.length == 0) {

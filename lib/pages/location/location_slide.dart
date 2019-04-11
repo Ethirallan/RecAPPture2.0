@@ -89,7 +89,7 @@ class LocationSlideState extends State<LocationSlide>
               onEditingComplete: () => setState(() {
                     autoVal = true;
                   }),
-              onSave: (String val) => MyData.location,
+              onSave: (String val) => MyData.location = val,
               validator: MyValidators.validateLocation,
             ),
             Padding(
