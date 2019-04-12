@@ -28,7 +28,7 @@ class MyValidators {
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = new RegExp(pattern);
     if (!regex.hasMatch(value)) {
-      return 'Enter Valid Email';
+      return 'Vnesite email!';
     } else {
       return null;
     }
@@ -37,7 +37,7 @@ class MyValidators {
   static String validatePhone(String value) {
     if (value.isNotEmpty) {
       if (value.length != 9) {
-        return 'Mobile Number must be of 10 digit';
+        return 'Telefon mora biti dolg 9 števik!';
       }
     }
     return null;
