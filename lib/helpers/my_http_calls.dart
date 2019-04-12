@@ -7,7 +7,7 @@ import 'package:recappture2/model/my_data.dart';
 const String api = 'http://88.200.63.178:3000';
 
 Future sendUser() async {
-  MyData.printData();
+  //MyData.printData();
   var url = '$api/user';
 
   Map data = {
@@ -25,7 +25,7 @@ Future sendUser() async {
   );
 
   var myData = jsonDecode(myResponse.body);
-  //MyData.userId = myData['message']['insertId'];
+  MyData.userId = myData['message']['insertId'];
   await sendOrder();
 }
 
