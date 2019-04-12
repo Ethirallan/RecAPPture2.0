@@ -44,7 +44,7 @@ class GallerySlideState extends State<GallerySlide>
                       return model.imgList[index] == ''
                           ? child
                           : Container(
-                              margin: EdgeInsets.only(top: 200, bottom: 200),
+                              margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                   fit: BoxFit.contain,
@@ -80,8 +80,8 @@ class GallerySlideState extends State<GallerySlide>
           ),
           Positioned(
             child: MySpeedDial(),
-            bottom: 100.0,
-            right: 50.0,
+            bottom: 30.0,
+            right: 40.0,
           ),
         ],
       ),

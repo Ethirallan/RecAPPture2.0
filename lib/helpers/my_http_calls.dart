@@ -25,7 +25,7 @@ Future sendUser() async {
   );
 
   var myData = jsonDecode(myResponse.body);
-  MyData.userId = myData['message']['insertId'];
+  //MyData.userId = myData['message']['insertId'];
   await sendOrder();
 }
 

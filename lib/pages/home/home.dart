@@ -57,18 +57,21 @@ class HomeState extends State<Home> {
               body: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                  PageView(
-                    physics: NeverScrollableScrollPhysics(),
-                    controller: navigationModel.navigationCtrl,
-                    children: <Widget>[
-                      cameraSlide,
-                      gallerySlide,
-                      locationSlide,
-                      quantitySlide,
-                      woodSlide,
-                      contactSlide,
-                      endSlide,
-                    ],
+                  Container(
+                    margin: EdgeInsets.only(bottom: 90),
+                    child: PageView(
+                      physics: NeverScrollableScrollPhysics(),
+                      controller: navigationModel.navigationCtrl,
+                      children: <Widget>[
+                        cameraSlide,
+                        gallerySlide,
+                        locationSlide,
+                        quantitySlide,
+                        woodSlide,
+                        contactSlide,
+                        endSlide,
+                      ],
+                    ),
                   ),
                   Positioned(
                     child: MLogo(),
