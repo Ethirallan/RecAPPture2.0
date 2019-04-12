@@ -80,8 +80,8 @@ class GallerySlideState extends State<GallerySlide>
           ),
           Positioned(
             child: MySpeedDial(),
-            bottom: 30.0,
-            right: 40.0,
+            bottom: 76,
+            right: 40,
           ),
         ],
       ),

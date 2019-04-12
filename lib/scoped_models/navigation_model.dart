@@ -30,7 +30,7 @@ class NavigationModel extends Model {
   }
 
   void next(BuildContext context) async {
-    if (page == 0 || page == 1 || page == 4) {
+    if (page == 0 || page == 1) {
       if (showBtn) {
         navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
       }
@@ -44,6 +44,11 @@ class NavigationModel extends Model {
         if (WoodSlideState.woodModel.turn < 3) {
           _showBtn = false;
         }
+        navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+      }
+    } else if (page == 4) {
+      if (showBtn) {
+        nextText = 'POŠLJI';
         navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
       }
     } else if (page == 5) {

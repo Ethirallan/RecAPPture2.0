@@ -19,7 +19,6 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
-
   static final NavigationModel navigationModel = new NavigationModel();
 
   CameraSlide cameraSlide = new CameraSlide();
@@ -57,21 +56,27 @@ class HomeState extends State<Home> {
               body: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(bottom: 90),
-                    child: PageView(
-                      physics: NeverScrollableScrollPhysics(),
-                      controller: navigationModel.navigationCtrl,
-                      children: <Widget>[
-                        cameraSlide,
-                        gallerySlide,
-                        locationSlide,
-                        quantitySlide,
-                        woodSlide,
-                        contactSlide,
-                        endSlide,
-                      ],
-                    ),
+                  PageView(
+                    physics: NeverScrollableScrollPhysics(),
+                    controller: navigationModel.navigationCtrl,
+                    children: <Widget>[
+                      cameraSlide,
+                      gallerySlide,
+                      Container(
+                        margin: EdgeInsets.only(bottom: 80),
+                        child: locationSlide,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 40),
+                        child: quantitySlide,
+                      ),
+                      woodSlide,
+                      Container(
+                        margin: EdgeInsets.only(bottom: 90),
+                        child: contactSlide,
+                      ),
+                      endSlide,
+                    ],
                   ),
                   Positioned(
                     child: MLogo(),
@@ -80,7 +85,9 @@ class HomeState extends State<Home> {
                   Positioned(
                     top: 50,
                     left: 20,
-                    child: MyBackButton(fun: () => navigationModel.goBack(context),),
+                    child: MyBackButton(
+                      fun: () => navigationModel.goBack(context),
+                    ),
                   ),
                   Positioned(
                     bottom: 80,
