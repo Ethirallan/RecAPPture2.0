@@ -36,8 +36,10 @@ class MyValidators {
 
   static String validatePhone(String value) {
     if (value.isNotEmpty) {
-      if (value.length != 9) {
-        return 'Telefon mora biti dolg 9 števik!';
+      if (value.length < 9) {
+        return 'Vnešena številka je prekratka!';
+      } else if (value.length > 9) {
+        return 'Vnešena številka je predolga!';
       }
     }
     return null;
