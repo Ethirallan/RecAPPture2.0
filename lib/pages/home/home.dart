@@ -70,7 +70,10 @@ class HomeState extends State<Home> {
                         margin: EdgeInsets.only(bottom: 40),
                         child: quantitySlide,
                       ),
-                      woodSlide,
+                      Container(
+                          margin: EdgeInsets.only(bottom: 40),
+                          child: woodSlide,
+                      ),
                       Container(
                         margin: EdgeInsets.only(bottom: 90),
                         child: contactSlide,

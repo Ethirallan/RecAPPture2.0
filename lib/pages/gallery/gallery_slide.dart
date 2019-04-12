@@ -33,6 +33,7 @@ class GallerySlideState extends State<GallerySlide>
       child: Stack(
         children: <Widget>[
           Container(
+            margin: EdgeInsets.only(top: 40, bottom: 80),
             child: Center(
               child: PageView.builder(
                 controller: galleryModel.galleryCtrl,
