@@ -1,3 +1,5 @@
+import 'package:recappture2/helpers/my_colors.dart';
+import 'package:recappture2/model/my_data.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter/material.dart';
 import 'package:recappture2/helpers/my_dialogs.dart';
@@ -54,16 +56,12 @@ class NavigationModel extends Model {
     } else if (page == 5) {
       if (ContactSlideState.validateContacts()) {
         showDialog(
-          barrierDismissible: false,
+          barrierDismissible: true,
           context: context,
-          builder: (BuildContext context) {
-            return loadingDialog;
+          builder: (BuildContext ctx) {
+            return showDataDialog(ctx, context);
           },
         );
-        await sendUser();
-        Navigator.pop(context);
-        navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
-        nextText = 'IZHOD';
       }
     } else if (page == 6) {
       exit(0);
@@ -89,9 +87,83 @@ class NavigationModel extends Model {
     } else if (page == 6) {
       return;
     } else {
+      FocusScope.of(context).requestFocus(new FocusNode());
       navigationCtrl.previousPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
       nextText = 'NAPREJ';
     }
     notifyListeners();
+  }
+
+  Widget showDataDialog(BuildContext ctx, context) {
+
+    String phone = MyData.phone.isNotEmpty ? MyData.phone : '/';
+    String wood = MyData.woodType == 1 ? 'listavec' : 'iglavec';
+
+    return AlertDialog(
+      title: Text('Želite poslati naslednje podatke?', style: TextStyle(color: MyColors.green, fontWeight: FontWeight.bold),),
+      content: SingleChildScrollView(
+        child: ListBody(
+          children: <Widget>[
+            myRow('Lokacija', MyData.location),
+            myRow('Količina', MyData.quantity.toString() + ' m\u00B3'),
+            myRow('Vrsta lesa', wood),
+            myRow('Email', MyData.email),
+            myRow('Telefon', phone),
+          ],
+        ),
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: Text(
+            'PREKLIČI',
+            style: TextStyle(color: MyColors.green),
+          ),
+          onPressed: () {
+            Navigator.pop(ctx);
+          },
+        ),
+        FlatButton(
+          child: Text(
+            'POŠLJI',
+            style: TextStyle(color: MyColors.green),
+          ),
+          onPressed: () async {
+            Navigator.pop(ctx);
+
+            showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (BuildContext context) {
+                return loadingDialog;
+              },
+            );
+            await sendUser();
+            Navigator.pop(context);
+            navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+            nextText = 'IZHOD';
+            notifyListeners();
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget myRow(String title, text) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          '$title: ',
+          style: TextStyle(color: MyColors.grey, fontWeight: FontWeight.bold),
+        ),
+        Flexible(
+          child: Text(
+            text,
+            style: TextStyle(color: MyColors.grey,),
+          ),
+        ),
+      ],
+    );
   }
 }

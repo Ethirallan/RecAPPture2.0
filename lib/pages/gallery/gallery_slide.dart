@@ -33,7 +33,7 @@ class GallerySlideState extends State<GallerySlide>
       child: Stack(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(top: 40, bottom: 80),
+            margin: EdgeInsets.only(top: 100, bottom: 140),
             child: Center(
               child: PageView.builder(
                 controller: galleryModel.galleryCtrl,
@@ -45,7 +45,7 @@ class GallerySlideState extends State<GallerySlide>
                       return model.imgList[index] == ''
                           ? child
                           : Container(
-                              margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
+                              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                   fit: BoxFit.contain,
