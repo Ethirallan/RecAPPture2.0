@@ -8,8 +8,8 @@ class WoodSlide extends StatefulWidget {
   WoodSlideState createState() => WoodSlideState();
 }
 
-class WoodSlideState extends State<WoodSlide> with AutomaticKeepAliveClientMixin<WoodSlide> {
-
+class WoodSlideState extends State<WoodSlide>
+    with AutomaticKeepAliveClientMixin<WoodSlide> {
   static final WoodModel woodModel = new WoodModel();
 
   @override
@@ -50,7 +50,8 @@ class WoodSlideState extends State<WoodSlide> with AutomaticKeepAliveClientMixin
               scrollDirection: Axis.vertical,
               itemCount: 4,
               itemBuilder: (context, index) {
-                return woodPage(index, () => woodModel.addDeciduous(context), () => woodModel.addConiferous(context));
+                return woodPage(index, () => woodModel.addDeciduous(context),
+                    () => woodModel.addConiferous(context));
               },
             ),
           ),
@@ -71,7 +72,10 @@ class WoodSlideState extends State<WoodSlide> with AutomaticKeepAliveClientMixin
               children: <Widget>[
                 GestureDetector(
                   onTap: funDeciduous,
-                  child: Image.asset('assets/listavec${index + 1}.png', fit: BoxFit.contain,),
+                  child: Image.asset(
+                    'assets/listavec${index + 1}.png',
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 MyText(
                   text: 'Listavec',
@@ -81,14 +85,18 @@ class WoodSlideState extends State<WoodSlide> with AutomaticKeepAliveClientMixin
               ],
             ),
           ),
-        ),Expanded(
+        ),
+        Expanded(
           child: Padding(
             padding: EdgeInsets.all(6),
             child: Column(
               children: <Widget>[
                 GestureDetector(
                   onTap: funConiferous,
-                  child: Image.asset('assets/iglavec${index + 1}.png', fit: BoxFit.contain,),
+                  child: Image.asset(
+                    'assets/iglavec${index + 1}.png',
+                    fit: BoxFit.contain,
+                  ),
                 ),
                 MyText(
                   text: 'Iglavec',
