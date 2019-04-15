@@ -43,7 +43,6 @@ class WoodSlideState extends State<WoodSlide> with AutomaticKeepAliveClientMixin
           ),
           Container(
             padding: EdgeInsets.only(top: 30),
-            color: Colors.white10,
             height: MediaQuery.of(context).size.height / 2,
             child: PageView.builder(
               physics: NeverScrollableScrollPhysics(),
