@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recappture2/helpers/my_colors.dart';
 
 class MyText extends StatelessWidget {
   MyText({this.text, this.size, this.fontWeight, this.color});
@@ -89,7 +90,7 @@ class MyInput extends StatelessWidget {
         ),
         decoration: InputDecoration(
             hintStyle: TextStyle(
-                color: Colors.grey,
+                color: MyColors.grey,
                 fontSize: 20.0
             ),
             hintText: this.hint
@@ -130,7 +131,7 @@ class MyInputWithLabel extends StatelessWidget {
         ),
         decoration: InputDecoration(
             labelStyle: TextStyle(
-              color: Colors.green,
+              color: MyColors.green,
               fontSize: 20.0,
               fontWeight: FontWeight.bold
             ),

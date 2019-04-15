@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recappture2/helpers/my_colors.dart';
 
 class MyBackButton extends StatelessWidget {
   MyBackButton({this.fun});
@@ -9,7 +10,7 @@ class MyBackButton extends StatelessWidget {
       icon: Icon(
         Icons.arrow_back,
         size: 40,
-        color: Colors.grey,
+        color: MyColors.grey,
       ),
       onPressed: fun,
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recappture2/pages/gallery/gallery_slide.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:math' as math;
+import 'package:recappture2/helpers/my_colors.dart';
 
 class MySpeedDial extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class MySpeedDialState extends State<MySpeedDial> with TickerProviderStateMixin 
   static const List<IconData> icons = const [ Icons.add_a_photo, Icons.photo_library ];
 
   Widget build(BuildContext context) {
-    Color backgroundColor = Colors.lightGreenAccent;
+    Color backgroundColor = MyColors.green;
     Color foregroundColor = Colors.white;
     _controller = new AnimationController(
       vsync: this,

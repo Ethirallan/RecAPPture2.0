@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recappture2/helpers/my_colors.dart';
 
 class NextBtn extends StatelessWidget {
   NextBtn({this.fun, this.text});
@@ -10,7 +11,7 @@ class NextBtn extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       child: Center(
         child: RaisedButton(
-          color: Colors.lightGreenAccent,
+          color: MyColors.green,
           child: Text(
             text,
             style: TextStyle(
