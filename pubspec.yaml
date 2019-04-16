@@ -29,8 +29,9 @@ dependencies:
   access_settings_menu: ^0.0.1
   scoped_model: ^1.0.1
   flutter_launcher_icons: ^0.7.0
-  connectivity: ^0.4.2+1
+  connectivity: ^0.4.3
   app_settings: ^1.0.6
+  permission_handler: ^3.0.0
 
 dev_dependencies:
   flutter_test:

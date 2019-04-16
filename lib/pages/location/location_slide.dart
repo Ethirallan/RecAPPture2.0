@@ -6,6 +6,7 @@ import 'package:recappture2/helpers/my_geolocator.dart';
 import 'package:recappture2/helpers/my_dialogs.dart';
 import 'package:recappture2/model/my_data.dart';
 import 'package:recappture2/pages/home/home.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class LocationSlide extends StatefulWidget {
   @override
@@ -31,7 +32,19 @@ class LocationSlideState extends State<LocationSlide>
   Widget build(BuildContext context) {
     void getLocationDetails() async {
       String res = await getLocationStatus();
-      if (res == 'Enabled' || res == 'Denied') {
+      if (res == 'Denied') {
+        await PermissionHandler().requestPermissions([PermissionGroup.location]);
+        if (await PermissionHandler().checkPermissionStatus(PermissionGroup.location) == PermissionStatus.granted) {
+          showDialog(
+              barrierDismissible: true,
+              context: context,
+              builder: (BuildContext context) {
+                return locationDialog;
+              });
+          locationCtrl.text = await getLocation();
+          Navigator.pop(context);
+        }
+      } else if (res == 'Enabled') {
         showDialog(
             barrierDismissible: true,
             context: context,
@@ -45,7 +58,7 @@ class LocationSlideState extends State<LocationSlide>
           barrierDismissible: true,
           context: context,
           builder: (BuildContext context) {
-            return openSettings(context);
+            return openLocationSettings(context);
           },
         );
       } else {
