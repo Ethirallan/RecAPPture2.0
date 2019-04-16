@@ -156,7 +156,7 @@ Widget exitDialog(BuildContext context) {
   );
 }
 
-Widget openSettings(BuildContext context) {
+Widget openLocationSettings(BuildContext context) {
   openSettingsMenu() async {
     var resultSettingsOpening = false;
     try {
@@ -168,46 +168,42 @@ Widget openSettings(BuildContext context) {
     return resultSettingsOpening;
   }
 
-  return WillPopScope(
-    onWillPop: () async {
-      return new Future(() => false);
-    },
-    child: AlertDialog(
-      title: Text(
-        'Lokacija onemogočena',
-        style: TextStyle(color: MyColors.green, fontWeight: FontWeight.bold),
-      ),
-      content: SingleChildScrollView(
-        child: ListBody(
-          children: <Widget>[
-            Text(
-              'Želite odpreti nastavitve lokacije?',
-              style: TextStyle(color: MyColors.grey),
-            ),
-          ],
-        ),
-      ),
-      actions: <Widget>[
-        FlatButton(
-          child: Text(
-            'PREKLIČI',
-            style: TextStyle(color: MyColors.green),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        FlatButton(
-          child: Text(
-            'ODPRI',
-            style: TextStyle(color: MyColors.green),
-          ),
-          onPressed: () {
-            openSettingsMenu();
-            Navigator.pop(context);
-          },
-        ),
-      ],
+
+  return AlertDialog(
+    title: Text(
+      'Lokacija onemogočena',
+      style: TextStyle(color: MyColors.green, fontWeight: FontWeight.bold),
     ),
+    content: SingleChildScrollView(
+      child: ListBody(
+        children: <Widget>[
+          Text(
+            'Želite odpreti nastavitve lokacije?',
+            style: TextStyle(color: MyColors.grey),
+          ),
+        ],
+      ),
+    ),
+    actions: <Widget>[
+      FlatButton(
+        child: Text(
+          'PREKLIČI',
+          style: TextStyle(color: MyColors.green),
+        ),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+      FlatButton(
+        child: Text(
+          'ODPRI',
+          style: TextStyle(color: MyColors.green),
+        ),
+        onPressed: () {
+          openSettingsMenu();
+          Navigator.pop(context);
+        },
+      ),
+    ],
   );
 }

@@ -33,7 +33,7 @@ Future<String> getLocation() async {
     myLocation = await getAddress(position.latitude, position.longitude);
     MyData.location = myLocation;
   } catch (e) {
-    myLocation = e;
+    myLocation = e.toString();
   }
 
   return myLocation;
