@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:access_settings_menu/access_settings_menu.dart';
 import 'package:recappture2/helpers/my_colors.dart';
-import 'package:recappture2/model/my_data.dart';
 import 'dart:io';
+import 'package:app_settings/app_settings.dart';
 
 Widget loadingDialog = WillPopScope(
   onWillPop: () async {
@@ -28,6 +28,64 @@ Widget loadingDialog = WillPopScope(
     ),
   ),
 );
+
+void networkDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(
+          'Težave pri povezovanju',
+          style: TextStyle(color: MyColors.green, fontWeight: FontWeight.bold),
+        ),
+        content: Text('Želite odpreti nastavitve za WIFI?',style: TextStyle(color: MyColors.grey),),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Ne'),
+          ),
+          FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+              AppSettings.openWIFISettings();
+            },
+            child: Text('Da'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+Widget onErrorDialog(BuildContext context) {
+  return AlertDialog(
+    title: Text(
+      'Težave pri povezovanju',
+      style: TextStyle(color: MyColors.green, fontWeight: FontWeight.bold),
+    ),
+    content: SingleChildScrollView(
+      child: ListBody(
+        children: <Widget>[
+          Text(
+            'Prosimo poskusite ponovno. V primeru ponovnih težav vas prosimo, da poskusite ponovno kasneje.',
+            style: TextStyle(color: MyColors.grey),
+          ),
+        ],
+      ),
+    ),
+    actions: <Widget>[
+      FlatButton(
+        child: Text(
+          'ZAPRI',
+          style: TextStyle(color: MyColors.green),
+        ),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+    ],
+  );
+}
 
 Widget locationDialog = WillPopScope(
   onWillPop: () async {
@@ -60,12 +118,16 @@ Widget exitDialog(BuildContext context) {
       return new Future(() => false);
     },
     child: AlertDialog(
-      title: Text('Izhod'),
+      title: Text(
+        'Izhod',
+        style: TextStyle(color: MyColors.green, fontWeight: FontWeight.bold),
+      ),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
             Text(
-              'Želite zapreti aplikacijo?', style: TextStyle(color: MyColors.green, fontWeight: FontWeight.bold),
+              'Želite zapreti aplikacijo?',
+              style: TextStyle(color: MyColors.grey),
             ),
           ],
         ),
@@ -95,11 +157,11 @@ Widget exitDialog(BuildContext context) {
 }
 
 Widget openSettings(BuildContext context) {
-
   openSettingsMenu() async {
     var resultSettingsOpening = false;
     try {
-      resultSettingsOpening = await AccessSettingsMenu.openSettings(settingsType: 'ACTION_LOCATION_SOURCE_SETTINGS');
+      resultSettingsOpening = await AccessSettingsMenu.openSettings(
+          settingsType: 'ACTION_LOCATION_SOURCE_SETTINGS');
     } catch (e) {
       resultSettingsOpening = false;
     }
@@ -111,7 +173,10 @@ Widget openSettings(BuildContext context) {
       return new Future(() => false);
     },
     child: AlertDialog(
-      title: Text('Lokacija onemogočena', style: TextStyle(color: MyColors.green, fontWeight: FontWeight.bold),),
+      title: Text(
+        'Lokacija onemogočena',
+        style: TextStyle(color: MyColors.green, fontWeight: FontWeight.bold),
+      ),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
@@ -146,5 +211,3 @@ Widget openSettings(BuildContext context) {
     ),
   );
 }
-
-
