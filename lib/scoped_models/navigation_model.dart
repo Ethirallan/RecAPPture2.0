@@ -9,6 +9,7 @@ import 'package:recappture2/pages/contacts/contacts_slide.dart';
 import 'package:recappture2/pages/quantity/quantity_slide.dart';
 import 'package:recappture2/helpers/my_http_calls.dart';
 import 'package:recappture2/pages/wood/wood_slide.dart';
+import 'package:connectivity/connectivity.dart';
 
 class NavigationModel extends Model {
 
@@ -55,13 +56,17 @@ class NavigationModel extends Model {
       }
     } else if (page == 5) {
       if (ContactSlideState.validateContacts()) {
-        showDialog(
-          barrierDismissible: true,
-          context: context,
-          builder: (BuildContext ctx) {
-            return showDataDialog(ctx, context);
-          },
-        );
+        if (await checkConnection()) {
+          showDialog(
+            barrierDismissible: true,
+            context: context,
+            builder: (BuildContext ctx) {
+              return showDataDialog(ctx, context);
+            },
+          );
+        } else {
+          networkDialog(context);
+        }
       }
     } else if (page == 6) {
       exit(0);
@@ -129,7 +134,6 @@ class NavigationModel extends Model {
           ),
           onPressed: () async {
             Navigator.pop(ctx);
-
             showDialog(
               barrierDismissible: false,
               context: context,
@@ -137,11 +141,20 @@ class NavigationModel extends Model {
                 return loadingDialog;
               },
             );
-            await sendUser();
+            bool done = await sendDataToTheServer();
             Navigator.pop(context);
-            navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
-            nextText = 'IZHOD';
-            notifyListeners();
+            if (done) {
+              navigationCtrl.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+              nextText = 'IZHOD';
+              notifyListeners();
+            } else {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return onErrorDialog(context);
+                },
+              );
+            }
           },
         ),
       ],
@@ -165,5 +178,13 @@ class NavigationModel extends Model {
         ),
       ],
     );
+  }
+
+  Future<bool> checkConnection() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      return false;
+    }
+    return true;
   }
 }
