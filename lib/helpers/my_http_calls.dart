@@ -6,32 +6,37 @@ import 'package:recappture2/model/my_data.dart';
 
 const String api = 'http://88.200.63.178:3000';
 
-Future sendUser() async {
-  //MyData.printData();
-  var url = '$api/user';
+Future<bool> sendDataToTheServer() async {
 
-  Map data = {
+  var url;
+  var myData;
+  Map data;
+  bool result = true;
+
+  //Send user
+  url = '$api/user';
+
+  data = {
     'email': MyData.email,
     'phone_number': MyData.phone,
     'admin': '0'
   };
 
-  var body = json.encode(data);
+  await http.post(url, headers: {'Content-Type': 'application/json'}, body: json.encode(data)
+  ).then((res) {
+    myData = jsonDecode(res.body);
+    MyData.userId = myData['message']['insertId'];
+  }).catchError((err) {
+    result = false;
+  });
 
-  var myResponse = await http.post(
-      url,
-      headers: {"Content-Type": "application/json"},
-      body: body
-  );
+  if (!result) {
+    return result;
+  }
 
-  var myData = jsonDecode(myResponse.body);
-  MyData.userId = myData['message']['insertId'];
-  await sendOrder();
-}
-
-Future sendOrder() async {
-  String url = '$api/order/';
-  Map myBody = {
+  //Send order
+  url = '$api/order/';
+  data = {
     'user_id': MyData.userId,
     'address': MyData.location,
     'lat': MyData.lat != null ? MyData.lat : 0,
@@ -39,29 +44,36 @@ Future sendOrder() async {
     'kub': MyData.quantity,
     'wood_type': MyData.woodType,
   };
-  var myResponse = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode(myBody));
-  var myData = jsonDecode(myResponse.body);
-  MyData.orderId = myData['message']['insertId'];
-  await sendQuiz();
-}
+  await http.post(url, headers: {'Content-Type': 'application/json'}, body: json.encode(data)).then((res) {
+    myData = jsonDecode(res.body);
+    MyData.orderId = myData['message']['insertId'];
+  }).catchError((err) {
+    result = false;
+  });
 
-Future sendQuiz() async {
-  String url = '$api/quiz/';
-  Map myBody = {
+  if (!result) {
+    return result;
+  }
+  //send quiz
+  url = '$api/quiz/';
+  data = {
     'order_id': MyData.orderId,
     'q1': MyData.quiz1,
     'q2': MyData.quiz2,
     'q3': MyData.quiz3,
   };
-  await http.post(url, headers: {'Content-Type': 'application/json'}, body: json.encode(myBody) );
-  await sendImage();
-}
 
-Future sendImage() async {
-  String url = '$api/image/';
+  await http.post(url, headers: {'Content-Type': 'application/json'}, body: json.encode(data)).then((res) {
+  }).catchError((err) {
+    result = false;
+  });
+
+  if (!result) {
+    return result;
+  }
+
+  //sending photos
+  url = '$api/image/';
   String orderId = MyData.orderId.toString();
 
   if (MyData.photoList[0] != '') {
@@ -72,10 +84,13 @@ Future sendImage() async {
       'order_id': orderId,
       'order_img_base64': photo
     }).then((res) {
-      print(res.statusCode);
+      result = true;
     }).catchError((err) {
-      print(err);
+      result = false;
     });
+  }
+  if (!result) {
+    return result;
   }
   if (MyData.photoList[1] != '') {
     String base64Image = base64Encode(File(MyData.photoList[1]).readAsBytesSync());
@@ -84,10 +99,13 @@ Future sendImage() async {
       'order_id': orderId,
       'order_img_base64': photo
     }).then((res) {
-      print(res.statusCode);
+      result = true;
     }).catchError((err) {
-      print(err);
+      result = false;
     });
+  }
+  if (!result) {
+    return result;
   }
   if (MyData.photoList[2] != '') {
     String base64Image = base64Encode(File(MyData.photoList[2]).readAsBytesSync());
@@ -96,10 +114,11 @@ Future sendImage() async {
       'order_id': orderId,
       'order_img_base64': photo
     }).then((res) {
-      print(res.statusCode);
+      result = true;
     }).catchError((err) {
-      print(err);
+      result = false;
     });
   }
+  return result;
 }
 
